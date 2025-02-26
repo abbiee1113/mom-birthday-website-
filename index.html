@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>妈妈的生日网站</title>
+  <!-- 引入你自己的CSS文件 -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 1. 主页 -->
+  <section id="home">
+    <h1>妈妈，生日快乐</h1>
+    <!-- 祝福视频：把your-video.mp4替换成你自己的文件名 -->
+    <video src="your-video.mp4" controls></video>
+    <p>希望这个网站能成为你每天的小惊喜。</p>
+  </section>
+
+  <!-- 2. 回忆区：照片、故事等 -->
+  <section id="memories">
+    <h2>我们的回忆</h2>
+    <div class="photo-gallery">
+      <img src="photo1.jpg" alt="回忆1"/>
+      <img src="photo2.jpg" alt="回忆2"/>
+      <!-- 更多照片请自行添加 -->
+    </div>
+    <div class="memory-text">
+      <p>在这里分享一些你和妈妈的温暖回忆……</p>
+      <!-- 也可以做一个时间轴式排版 -->
+    </div>
+  </section>
+
+  <!-- 3. 祝福留言板 + 许愿墙 -->
+  <section id="messages">
+    <h2>留言与愿望</h2>
+    <form id="message-form">
+      <textarea placeholder="写下你对妈妈的祝福或愿望……" required></textarea>
+      <button type="submit">提交</button>
+    </form>
+    <!-- 显示留言的区域 -->
+    <div class="message-list"></div>
+
+    <!-- 如果想做一个许愿墙，可以用另外的表单或同一个表单里区分 -->
+    <div class="wish-list">
+      <h3>妈妈的愿望清单</h3>
+      <ul>
+        <li>例如：今年想去旅行</li>
+        <li>例如：学做一道新菜</li>
+        <!-- 后续可以通过JS动态插入新的愿望 -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. 健康提醒 -->
+  <section id="health-tips">
+    <h2>健康小贴士</h2>
+    <ul>
+      <li>多喝水，每天8杯左右</li>
+      <li>适量运动，做些轻柔的拉伸或散步</li>
+      <li>保证睡眠，规律作息，心情平和</li>
+      <!-- 可用JS随机显示或每天更新一句 -->
+    </ul>
+  </section>
+
+  <!-- 在这里引入JS文件 -->
+  <script src="script.js"></script>
+</body>
+</html>
