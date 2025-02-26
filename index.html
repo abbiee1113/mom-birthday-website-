@@ -38,24 +38,18 @@
       border-radius: 8px;
     }
 
-    /* ========== 回忆区照片 ========== */
+    /* ========== 回忆区照片：改为网格布局，3列，大小相等 ========== */
     .photo-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;                         /* 启用Grid */
+      grid-template-columns: repeat(3, 1fr); /* 3列，每列平分宽度 */
+      gap: 10px;                             /* 图片之间的间距 */
     }
     .photo-gallery img {
-      width: 150px;
-      height: auto;
-      margin: 10px;
+      width: 100%;            /* 占据格子宽度 */
+      aspect-ratio: 1 / 1;    /* 保持1:1正方形 */
+      object-fit: cover;      /* 填充并裁剪超出部分 */
       border-radius: 6px;
-      object-fit: cover;
-      cursor: pointer; /* 鼠标悬停时提示可点击 */
-    }
-    .memory-text {
-      margin-top: 10px;
-      text-align: center;
-      font-weight: bold;
+      cursor: pointer;
     }
 
     /* ========== 留言板 ========== */
@@ -150,7 +144,7 @@
   <section id="memories">
     <h2>美丽的妈妈</h2>
     <div class="photo-gallery">
-      <!-- 点击这些照片，就能弹窗查看大图 -->
+      <!-- 点击这些照片，就能弹窗查看大图 (Grid 3列) -->
       <img src="photo1.jpg" alt="回忆1"/>
       <img src="photo2.jpg" alt="回忆2"/>
       <img src="photo3.jpg" alt="回忆3"/>
@@ -161,7 +155,7 @@
       <img src="photo8.jpg" alt="回忆8"/>
       <img src="photo9.jpg" alt="回忆9"/>
     </div>
-    <div class="memory-text">
+    <div style="text-align:center; margin-top:10px; font-weight:bold;">
       不管什么时候的妈妈都是最美的！！
     </div>
   </section>
@@ -176,7 +170,6 @@
     <!-- 显示留言的区域 -->
     <div class="message-list"></div>
 
-    <!-- 如果想做一个许愿墙，可以用另外的表单或同一个表单里区分 -->
     <div class="wish-list">
       <h3>妈妈的愿望清单</h3>
       <ul>
@@ -253,4 +246,5 @@
   </script>
 </body>
 </html>
+
 
