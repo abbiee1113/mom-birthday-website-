@@ -4,9 +4,138 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>妈妈的生日网站</title>
-  <!-- 引入你自己的CSS文件 -->
-  <link rel="stylesheet" href="styles.css" />
+
+  <!-- 在此内联CSS -->
+  <style>
+    /* ========== 全局基础 ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: sans-serif;
+      background: #fdfaf4;
+      color: #333;
+      line-height: 1.6;
+    }
+    section {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    /* 祝福视频 */
+    video {
+      display: block;
+      max-width: 100%;
+      margin: 10px auto;
+      border-radius: 8px;
+    }
+
+    /* ========== 回忆区照片 ========== */
+    .photo-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .photo-gallery img {
+      width: 150px;
+      height: auto;
+      margin: 10px;
+      border-radius: 6px;
+      object-fit: cover;
+      cursor: pointer; /* 鼠标悬停时提示可点击 */
+    }
+    .memory-text {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* ========== 留言板 ========== */
+    #message-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    #message-form textarea {
+      width: 80%;
+      height: 80px;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      resize: none;
+    }
+    #message-form button {
+      padding: 8px 16px;
+      border: none;
+      background: #ff9f8d;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #message-form button:hover {
+      background: #ff7f6d;
+    }
+    .message-list {
+      margin-top: 10px;
+    }
+    .single-message {
+      background: #fff3f0;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    /* ========== 健康提醒 ========== */
+    #health-tips ul {
+      list-style: disc;
+      margin-left: 40px;
+    }
+
+    /* ========== 图片弹窗 Modal ========== */
+    .modal {
+      display: none; /* 初始隐藏 */
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7); /* 半透明黑 */
+    }
+    .modal-content {
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+      margin: 80px auto 0 auto;
+      border-radius: 8px;
+    }
+    .modal-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .modal-caption {
+      text-align: center;
+      color: #fff;
+      margin-top: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- 1. 主页 -->
@@ -14,13 +143,14 @@
     <h1>妈妈，生日快乐</h1>
     <!-- 祝福视频：把your-video.mp4替换成你自己的文件名 -->
     <video src="your-video.mp4" controls></video>
-    <p>希望这个网站能成为你每天的小惊喜。</p>
+    <p style="text-align:center;">希望这个网站能成为你每天的小惊喜。</p>
   </section>
 
   <!-- 2. 回忆区：照片、故事等 -->
   <section id="memories">
     <h2>美丽的妈妈</h2>
     <div class="photo-gallery">
+      <!-- 点击这些照片，就能弹窗查看大图 -->
       <img src="photo1.jpg" alt="回忆1"/>
       <img src="photo2.jpg" alt="回忆2"/>
       <img src="photo3.jpg" alt="回忆3"/>
@@ -31,10 +161,9 @@
       <img src="photo8.jpg" alt="回忆8"/>
       <img src="photo9.jpg" alt="回忆9"/>
       <img src="photo10.jpg" alt="回忆10"/>
-      <!-- 更多照片请自行添加 -->
     </div>
     <div class="memory-text">
-      <p>不管什么时候的妈妈都是最美的！！</p>
+      不管什么时候的妈妈都是最美的！！
     </div>
   </section>
 
@@ -52,8 +181,8 @@
     <div class="wish-list">
       <h3>妈妈的愿望清单</h3>
       <ul>
-        <li>例如：今年想去旅行</li>
-        <li>例如：全家人身体健康</li>
+        <li>今年想去旅行</li>
+        <li>全家人身体健康</li>
         <!-- 后续可以通过JS动态插入新的愿望 -->
       </ul>
     </div>
@@ -66,11 +195,63 @@
       <li>多喝水，每天8杯左右</li>
       <li>适量运动，做些轻柔的拉伸或散步</li>
       <li>保证睡眠，规律作息，心情平和</li>
-      <!-- 可用JS随机显示或每天更新一句 -->
     </ul>
   </section>
 
-  <!-- 在这里引入JS文件 -->
-  <script src="script.js"></script>
+  <!-- ========== 图片弹窗 (modal) ========== -->
+  <div id="image-modal" class="modal">
+    <span class="modal-close" id="closeModal">&times;</span>
+    <img class="modal-content" id="modalImg" />
+    <div class="modal-caption" id="caption"></div>
+  </div>
+
+  <!-- 在这里内联JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* 1. 留言功能 */
+      const form = document.getElementById('message-form');
+      const messageList = document.querySelector('.message-list');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const textarea = form.querySelector('textarea');
+        const content = textarea.value.trim();
+
+        if (content) {
+          const newMessage = document.createElement('div');
+          newMessage.classList.add('single-message');
+          newMessage.textContent = content;
+          messageList.prepend(newMessage);
+          textarea.value = '';
+        }
+      });
+
+      /* 2. 点击图片 -> 打开弹窗查看大图 */
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modalImg');
+      const captionText = document.getElementById('caption');
+      const closeModal = document.getElementById('closeModal');
+      
+      const images = document.querySelectorAll('.photo-gallery img');
+      images.forEach(img => {
+        img.addEventListener('click', () => {
+          modal.style.display = 'block';
+          modalImg.src = img.src;
+          captionText.innerText = img.alt || '美好回忆';
+        });
+      });
+
+      /* 3. 关闭弹窗 */
+      closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
+
