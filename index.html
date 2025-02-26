@@ -38,54 +38,18 @@
       border-radius: 8px;
     }
 
-    /* ========== 回忆区照片：改为网格布局，3列，大小相等 ========== */
+    /* ========== 回忆区照片：网格3列，大小相等 ========== */
     .photo-gallery {
-      display: grid;                         /* 启用Grid */
-      grid-template-columns: repeat(3, 1fr); /* 3列，每列平分宽度 */
-      gap: 10px;                             /* 图片之间的间距 */
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
     .photo-gallery img {
-      width: 100%;            /* 占据格子宽度 */
-      aspect-ratio: 1 / 1;    /* 保持1:1正方形 */
-      object-fit: cover;      /* 填充并裁剪超出部分 */
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       border-radius: 6px;
       cursor: pointer;
-    }
-
-    /* ========== 留言板 ========== */
-    #message-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    #message-form textarea {
-      width: 80%;
-      height: 80px;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 4px;
-      resize: none;
-    }
-    #message-form button {
-      padding: 8px 16px;
-      border: none;
-      background: #ff9f8d;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    #message-form button:hover {
-      background: #ff7f6d;
-    }
-    .message-list {
-      margin-top: 10px;
-    }
-    .single-message {
-      background: #fff3f0;
-      margin: 8px 0;
-      padding: 10px;
-      border-radius: 6px;
     }
 
     /* ========== 健康提醒 ========== */
@@ -127,15 +91,60 @@
       color: #fff;
       margin-top: 10px;
     }
+
+    /* ========== 给妈妈的一封信按钮与内容 ========== */
+    #openLetterBtn, #closeLetterBtn {
+      display: inline-block;
+      padding: 8px 16px;
+      border: none;
+      background: #ff9f8d;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    #openLetterBtn:hover, #closeLetterBtn:hover {
+      background: #ff7f6d;
+    }
+    /* 默认隐藏信件内容，点击按钮后再显示 */
+    #letterContent {
+      display: none;
+      margin-top: 15px;
+      text-align: left;
+      line-height: 1.8;
+    }
+    #letterContent p {
+      margin-bottom: 10px;
+    }
+
+    /* ========== BGM播放按钮 ========== */
+    #musicBtn {
+      display: block;
+      margin: 10px auto;
+      padding: 8px 16px;
+      border: none;
+      background: #fae3b4;
+      color: #333;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #musicBtn:hover {
+      background: #f7cf86;
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- 背景音乐：不自动播放，点击按钮手动播放 -->
+  <audio id="bgm" src="your-music.mp3" loop></audio>
+  <!-- 播放/暂停音乐的按钮 -->
+  <button id="musicBtn">🎵播放音乐</button>
+
   <!-- 1. 主页 -->
   <section id="home">
     <h1>妈妈，生日快乐</h1>
-    <!-- 祝福视频：把your-video.mp4替换成你自己的文件名 -->
+    <!-- 祝福视频：把 your-video.mp4 替换成你自己的文件名 -->
     <video src="your-video.mp4" controls></video>
     <p style="text-align:center;">希望这个网站能成为你今天的小惊喜。</p>
   </section>
@@ -148,35 +157,36 @@
       <img src="photo1.jpg" alt="好优雅！"/>
       <img src="photo2.jpg" alt="充满干劲的美丽妈咪"/>
       <img src="photo3.jpg" alt="和我们无锡的春晚小明星合照"/>
-      <img src="photo4.jpg" alt="这也太美啦😍"/>
+      <img src="photo4.jpg" alt="这也太美啦"/>
       <img src="photo5.jpg" alt="这张美得连头发丝都在发光"/>
-      <img src="photo6.jpg" alt="女帝风范！！"/>
-      <img src="photo7.jpg" alt="我们以前的合照里妈妈也很可爱哦"/>
+      <img src="photo6.jpg" alt="女帝风范"/>
+      <img src="photo7.jpg" alt="我们以前的合照里妈妈也很可爱"/>
       <img src="photo8.jpg" alt="工作中的妈妈超级厉害"/>
       <img src="photo9.jpg" alt="嘻嘻这是你以前剪完头发自己拍的哦"/>
     </div>
     <div style="text-align:center; margin-top:10px; font-weight:bold;">
-      总之，不管什么时候，什么场合下的妈妈在我眼里都是最美的！！
+      总之，不管什么时候，什么场合下的妈妈在我眼里都是最美的
     </div>
   </section>
 
-  <!-- 3. 祝福留言板 + 许愿墙 -->
-  <section id="messages">
-    <h2>留言与愿望</h2>
-    <form id="message-form">
-      <textarea placeholder="写下你对妈妈的祝福或愿望……" required></textarea>
-      <button type="submit">提交</button>
-    </form>
-    <!-- 显示留言的区域 -->
-    <div class="message-list"></div>
+  <!-- 3. 给妈妈的一封信：按钮 + 信件内容 -->
+  <section id="letter">
+    <h2>给妈妈的一封信</h2>
+    <!-- 按钮，点击后弹出信件内容 -->
+    <button id="openLetterBtn">打开信件</button>
 
-    <div class="wish-list">
-      <h3>妈妈的愿望清单</h3>
-      <ul>
-        <li>今年想去旅行</li>
-        <li>全家人身体健康</li>
-        <!-- 后续可以通过JS动态插入新的愿望 -->
-      </ul>
+    <!-- 信件内容默认隐藏，点击按钮后才显示 -->
+    <div id="letterContent">
+      <p>亲爱的妈妈：</p>
+      <p>
+        这里写你想对妈妈说的话……  
+        可以分享你的成长感悟、感谢之情，  
+        以及你对未来的期待和对她的祝福。
+      </p>
+      <p>—— 永远爱你的孩子</p>
+
+      <!-- 返回按钮 -->
+      <button id="closeLetterBtn">返回</button>
     </div>
   </section>
 
@@ -200,25 +210,24 @@
   <!-- 在这里内联JS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      /* 1. 留言功能 */
-      const form = document.getElementById('message-form');
-      const messageList = document.querySelector('.message-list');
+      /* ========== 1. BGM 播放控制 ========== */
+      const bgm = document.getElementById('bgm');
+      const musicBtn = document.getElementById('musicBtn');
+      let isPlaying = false;
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const textarea = form.querySelector('textarea');
-        const content = textarea.value.trim();
-
-        if (content) {
-          const newMessage = document.createElement('div');
-          newMessage.classList.add('single-message');
-          newMessage.textContent = content;
-          messageList.prepend(newMessage);
-          textarea.value = '';
+      musicBtn.addEventListener('click', () => {
+        if (isPlaying) {
+          bgm.pause();
+          musicBtn.textContent = '🎵播放音乐';
+          isPlaying = false;
+        } else {
+          bgm.play();
+          musicBtn.textContent = '🔇暂停音乐';
+          isPlaying = true;
         }
       });
 
-      /* 2. 点击图片 -> 打开弹窗查看大图 */
+      /* ========== 2. 点击图片 -> 弹窗查看大图 ========== */
       const modal = document.getElementById('image-modal');
       const modalImg = document.getElementById('modalImg');
       const captionText = document.getElementById('caption');
@@ -233,7 +242,6 @@
         });
       });
 
-      /* 3. 关闭弹窗 */
       closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
       });
@@ -242,9 +250,23 @@
           modal.style.display = 'none';
         }
       });
+
+      /* ========== 3. 给妈妈的一封信：打开 & 关闭 ========== */
+      const openLetterBtn = document.getElementById('openLetterBtn');
+      const closeLetterBtn = document.getElementById('closeLetterBtn');
+      const letterContent = document.getElementById('letterContent');
+
+      openLetterBtn.addEventListener('click', () => {
+        letterContent.style.display = 'block';
+        openLetterBtn.style.display = 'none';
+      });
+
+      closeLetterBtn.addEventListener('click', () => {
+        letterContent.style.display = 'none';
+        openLetterBtn.style.display = 'inline-block';
+      });
     });
   </script>
 </body>
 </html>
-
 
