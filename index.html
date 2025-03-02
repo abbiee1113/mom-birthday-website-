@@ -153,7 +153,6 @@
   <section id="memories">
     <h2>美丽的妈妈</h2>
     <div class="photo-gallery">
-      <!-- 点击这些照片，就能弹窗查看大图 (Grid 3列) -->
       <img src="photo1.jpg" alt="好优雅！"/>
       <img src="photo2.jpg" alt="充满干劲的美丽妈咪"/>
       <img src="photo3.jpg" alt="和我们无锡的春晚小明星合照"/>
@@ -172,20 +171,66 @@
   <!-- 3. 给妈妈的一封信：按钮 + 信件内容 -->
   <section id="letter">
     <h2>给妈妈的一封信</h2>
-    <!-- 按钮，点击后弹出信件内容 -->
     <button id="openLetterBtn">打开信件</button>
 
-    <!-- 信件内容默认隐藏，点击按钮后才显示 -->
+    <!-- 信件内容：点击“打开信件”后才会显示 -->
     <div id="letterContent">
-      <p>亲爱的妈妈：</p>
-      <p>
-        这里写你想对妈妈说的话……  
-        可以分享你的成长感悟、感谢之情，  
-        以及你对未来的期待和对她的祝福。
-      </p>
-      <p>—— 永远爱你的孩子</p>
+      <p>亲爱的妈妈女士：</p>
 
-      <!-- 返回按钮 -->
+      <p>
+        最近英国的天气不错，有几分像无锡的初春。  
+        但可能又集体旷工了，我攒了许多天的撒娇全堵在欧亚大陆上空，  
+        但没关系——思念是有超能力的。  
+        它能通过虚拟的电子世界，立刻到达你的身边。
+      </p>
+
+      <p>
+        这几天在翻相册找照片的时候，突然感觉原来我那些张牙舞爪的青春，  
+        全是仗着妈妈您的纵容！以前总梗着脖子和您争论，实在是太不懂事了。
+      </p>
+
+      <p>
+        最近读《俗女养成记》的时候，看到作者说：“家庭生活不可或缺的一部分，  
+        就是大人带着孩子一起应付时代的荒谬吧！”  
+        我一下就想到了你们。  
+        你们一直以来都陪着我一起思考、摸索世界的不确定性。
+      </p>
+
+      <p>
+        小时候，我把大人当成认识世界的第一站，试图通过你们学会爱与责任，  
+        也学会如何面对社会中的不合理、不讲理、甚至荒谬的部分。  
+        虽然我曾有些苛刻地希望你们能帮我适应一切现实，  
+        但后来我发现，你们自己也在努力对抗各种难题呀。
+      </p>
+
+      <p>
+        但我现在明白了，这种“一起应付”才是我们家人之间最大的温暖。  
+        我不想变得太快地长大，却又想尽快变得更好一点，  
+        这样才能更好地守护你们，也承担起家里的责任。
+      </p>
+
+      <p>
+        从小时候起，就总看您在办公桌前改稿子，像女侠批阅江湖文书。  
+        直到现在，我依然觉得您做的每一件事都那么有力量，也那么美丽。  
+        亲爱的亚亚女士，您真的把日子过成了一本镶金边的奋斗史啊。
+      </p>
+
+      <p>
+        但是，劳模也需要歇息呀。  
+        偶尔，您也要允许自己慢一点，让自己舒舒服服地享受生活。  
+        因为我正在快快长大，希望能更快地支持您、照顾您。
+      </p>
+
+      <p>
+        您知道的，我一直跟所有人说：“我最大的偶像，就是我的妈妈！”  
+        全世界最棒的亚亚女士，生日快乐！  
+        其实不止生日，每天都要快乐！
+      </p>
+
+      <p>
+        —— 您永远的头号粉丝
+      </p>
+
       <button id="closeLetterBtn">返回</button>
     </div>
   </section>
@@ -210,6 +255,7 @@
   <!-- 在这里内联JS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+
       /* ========== 1. BGM 播放控制 ========== */
       const bgm = document.getElementById('bgm');
       const musicBtn = document.getElementById('musicBtn');
@@ -232,7 +278,7 @@
       const modalImg = document.getElementById('modalImg');
       const captionText = document.getElementById('caption');
       const closeModal = document.getElementById('closeModal');
-      
+
       const images = document.querySelectorAll('.photo-gallery img');
       images.forEach(img => {
         img.addEventListener('click', () => {
@@ -256,11 +302,13 @@
       const closeLetterBtn = document.getElementById('closeLetterBtn');
       const letterContent = document.getElementById('letterContent');
 
+      // 点击“打开信件” => 显示信件内容
       openLetterBtn.addEventListener('click', () => {
         letterContent.style.display = 'block';
         openLetterBtn.style.display = 'none';
       });
 
+      // 点击“返回” => 隐藏信件内容，重新显示按钮
       closeLetterBtn.addEventListener('click', () => {
         letterContent.style.display = 'none';
         openLetterBtn.style.display = 'inline-block';
@@ -269,4 +317,5 @@
   </script>
 </body>
 </html>
+
 
